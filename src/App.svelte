@@ -1,10 +1,12 @@
 <script>
 	export let title;
+	import Map from "./components/Map.svelte"
+
 </script>
 
 <main>
 	<h1>{title}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<Map />
 </main>
 
 <style>
