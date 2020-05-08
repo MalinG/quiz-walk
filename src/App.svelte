@@ -10,15 +10,22 @@
 </main>
 
 <style>
+	body {
+
+	}
 	main {
+		color: white;
 		text-align: center;
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
+		min-height: 100vh;
+		background: rgb(156,48,173);
+		background: linear-gradient(180deg, rgba(156,48,173,1) 0%, rgba(115,89,254,1) 85%);
 	}
 
 	h1 {
-		color: #ff3e00;
+		color:white;
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
