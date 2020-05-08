@@ -14,6 +14,8 @@
 
     startLat = crd.latitude
     startLong = crd.longitude
+
+    getDistanceFromStart()
   }
 
   function newPosition(pos) {
@@ -64,9 +66,6 @@
     <p>Start longitude: {startLong || 'not set'}</p>
   </div>
 
-  <button on:click={getDistanceFromStart}>
-    Visa avstånd
-  </button>
   <div>
     <p>Avstånd från start: {distance || 0} meter</p>
   </div>
