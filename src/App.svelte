@@ -10,9 +10,6 @@
 </main>
 
 <style>
-	body {
-
-	}
 	main {
 		color: white;
 		text-align: center;

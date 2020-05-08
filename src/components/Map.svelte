@@ -7,36 +7,32 @@
     maximumAge: 0
   };
 
-  let startLat, startLong, distance
+  let startLat, startLong, distance, watchId
 
   function success(pos) {
     const crd = pos.coords;
 
     startLat = crd.latitude
     startLong = crd.longitude
-
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
   }
 
   function newPosition(pos) {
     const crd = pos.coords;
 
-    distance = getDistance({latitude: crd.latitude, longitude: crd.longitude}, {
-                latitude: startLat,
-                longitude: startLong,
-            })
-    console.log(
-            'You are ',
-            getDistance({latitude: crd.latitude, longitude: crd.longitude}, {
-                latitude: startLat,
-                longitude: startLong,
-            }),
-            'meters away from startposition'
-        );
+    console.log('calling new pos')
+
+    distance = getDistance(
+      {latitude: crd.latitude, longitude: crd.longitude},
+      {latitude: startLat, longitude: startLong}
+    )
+
+    if (distance > 20) {
+      alert('!!! question !!!')
+      navigator.geolocation.clearWatch(watchId);
+      setStartPosition();
+    }
   }
+
 
   function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -49,7 +45,9 @@
 
   function getDistanceFromStart() {
     console.log('get distance')
-    navigator.geolocation.getCurrentPosition(newPosition, error, options);
+    //navigator.geolocation.getCurrentPosition(newPosition, error, options);
+
+    watchId = navigator.geolocation.watchPosition(newPosition, error, options);
   }
 
 
