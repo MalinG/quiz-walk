@@ -31,19 +31,17 @@
       {latitude: startLat, longitude: startLong}
     )
 
-    // Reset initial position every 20 meters
-    if (distance > 20) {
+    // Reset initial position every 10 meters
+    if (distance > 5) {
       navigator.geolocation.clearWatch(watchId);
-      totalDistance += 20
-      setStartPosition();
-    }
+      totalDistance += 5
 
-    // Show a question every 100 meters
-    if(totalDistance % 100 === 0) {
-        navigator.geolocation.clearWatch(watchId);
+      if(totalDistance % 10 === 0) {
         dispatch('showQuestion', {
-        questionNum: totalDistance / 100
-      });
+          questionNum: totalDistance / 10
+        });
+      }
+      setStartPosition();
     }
   }
 
@@ -52,7 +50,7 @@
   }
 
   export function setStartPosition() {
-    startButtonVisible = false;
+    if (startButtonVisible) startButtonVisible = false;
     console.log('reset position')
     navigator.geolocation.getCurrentPosition(start, error, options);
   }

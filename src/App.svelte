@@ -7,18 +7,19 @@
 	let locationComponent
 
 	function handleShowQuestion() {
-			showQuestion = !showQuestion
-			console.log('on message')
+			showQuestion = true
+			console.log('showQuestion')
 	}
 
 	function handleQuestionAnswered() {
-		locationComponent.setStartPosition()
+		showQuestion = false
+		console.log('hideQuestion')
 	}
 
 </script>
 
 <main>
-	<img src="tipspromenix-logo.png" height="120px" />
+	<img alt="logo" src="tipspromenix-logo.png" height="120px" />
 	<h1>{title}!</h1>
 	<Location on:showQuestion={handleShowQuestion} bind:this={locationComponent} />
 	{#if showQuestion}

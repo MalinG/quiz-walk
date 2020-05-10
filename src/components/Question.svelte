@@ -26,14 +26,14 @@
     if(answer === correctAnswer) {
       status = 'Rätt svar! Bra jobbat'
 
-      numAnsweredQuestions ++
-      numTotalQuestions ++
+      numAnsweredQuestions = numAnsweredQuestions + 1
+      numTotalQuestions = numTotalQuestions + 1
 
       // Todo: update point and number of answered questions
     } else {
       status = `Fel svar. Rätt svar är ${correctAnswer}`
       // Todo: update number of answered questions
-      numTotalQuestions ++
+      numTotalQuestions = numTotalQuestions + 1
     }
   }
 
