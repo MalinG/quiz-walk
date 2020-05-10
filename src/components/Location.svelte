@@ -32,14 +32,12 @@
     )
 
     // Reset initial position every 10 meters
-    if (distance > 5) {
+    if (distance > 10) {
       navigator.geolocation.clearWatch(watchId);
-      totalDistance += 5
+      totalDistance += 10
 
-      if(totalDistance % 10 === 0) {
-        dispatch('showQuestion', {
-          questionNum: totalDistance / 10
-        });
+      if(totalDistance % 50 === 0) {
+        dispatch('showQuestion', {});
       }
       setStartPosition();
     }
@@ -64,7 +62,7 @@
 
 <div>
   <div>
-    <p>Total distance: {totalDistance} meter</p>
+    <p>Total distance: {totalDistance} meters</p>
   </div>
   {#if startButtonVisible}
     <button transition:fade class="button--large button--success" on:click={setStartPosition}>

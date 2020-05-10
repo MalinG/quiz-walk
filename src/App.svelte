@@ -2,8 +2,9 @@
 	export let title;
 	import Location from "./components/Location.svelte"
 	import Question from "./components/Question.svelte"
-	let showQuestion = false
+	import { numCorrectQuestions, numTotalQuestions} from './stores.js'
 
+	let showQuestion = false
 	let locationComponent
 
 	function handleShowQuestion() {
@@ -25,6 +26,9 @@
 	{#if showQuestion}
 		<Question on:continue={handleQuestionAnswered} />
   {/if}
+	<div class="count">
+		{$numCorrectQuestions} / {$numTotalQuestions}
+	</div>
 </main>
 
 <style>
@@ -47,6 +51,11 @@
 		font-size: 40px;
 		font-weight: 100;
 		margin-top: 8px;
+	}
+
+	.count {
+		font-size: 18px;
+		font-weight: 100;
 	}
 
 	@media (min-width: 640px) {

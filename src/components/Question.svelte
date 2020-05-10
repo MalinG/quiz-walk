@@ -1,13 +1,13 @@
 <script>
   import { onMount, createEventDispatcher } from 'svelte';
+  import { numCorrectQuestions, numTotalQuestions} from '../stores'
+
   const dispatch = createEventDispatcher();
 
   let question = ''
   let choices = []
   let correctAnswer
   let status
-  let numAnsweredQuestions = 0
-  let numTotalQuestions = 0
 
   onMount(async () => {
 		const res = await fetch(`https://opentdb.com/api.php?amount=1&difficulty=medium`);
@@ -24,16 +24,12 @@
 
   function handleSubmitAnswer(answer) {
     if(answer === correctAnswer) {
-      status = 'Rätt svar! Bra jobbat'
-
-      numAnsweredQuestions = numAnsweredQuestions + 1
-      numTotalQuestions = numTotalQuestions + 1
-
-      // Todo: update point and number of answered questions
+      status = 'Correct! Well done :)'
+      numTotalQuestions.update(existing => existing + 1);
+      numCorrectQuestions.update(existing => existing + 1)
     } else {
-      status = `Fel svar. Rätt svar är ${correctAnswer}`
-      // Todo: update number of answered questions
-      numTotalQuestions = numTotalQuestions + 1
+      status = `Wrong answer. The correct answer is ${correctAnswer}`
+      numTotalQuestions.update(existing => existing + 1);
     }
   }
 
@@ -59,9 +55,6 @@
     <button class="button--success button--large" on:click={handleContinue}>Fortsätt</button>
   {/if}
 
-  {#if numTotalQuestions}
-    <p>{numAnsweredQuestions} / {numTotalQuestions}</p>
-  {/if}
 </div>
 
 <style>
