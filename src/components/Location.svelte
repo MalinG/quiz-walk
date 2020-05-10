@@ -36,7 +36,7 @@
       navigator.geolocation.clearWatch(watchId);
       totalDistance += 10
 
-      if(totalDistance % 50 === 0) {
+      if(totalDistance % 300 === 0) {
         dispatch('showQuestion', {});
       }
       setStartPosition();
