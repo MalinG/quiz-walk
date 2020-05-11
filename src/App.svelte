@@ -4,7 +4,7 @@
 	import Question from "./components/Question.svelte"
 	import { numCorrectQuestions, numTotalQuestions} from './stores.js'
 
-	let showQuestion = false
+	let showQuestion = true
 	let locationComponent
 
 	function handleShowQuestion() {
@@ -22,13 +22,13 @@
 <main>
 	<img alt="logo" src="tipspromenix-logo.png" height="120px" />
 	<h1>{title}!</h1>
-	<Location on:showQuestion={handleShowQuestion} bind:this={locationComponent} />
 	{#if showQuestion}
 		<Question on:continue={handleQuestionAnswered} />
   {/if}
 	<div class="count">
 		{$numCorrectQuestions} / {$numTotalQuestions}
 	</div>
+	<Location on:showQuestion={handleShowQuestion} bind:this={locationComponent} />
 </main>
 
 <style>

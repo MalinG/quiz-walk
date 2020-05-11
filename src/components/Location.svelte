@@ -84,7 +84,7 @@
     </button>
   {/if}
   {#if !startButtonVisible}
-    <button transition:fade class="button--large button--error" on:click={stop}>
+    <button transition:fade class="button--large" on:click={stop}>
       Stop
     </button>
   {/if}
