@@ -1,9 +1,10 @@
 <script>
   import getDistance from 'geolib/es/getDistance';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onDestroy } from 'svelte';
   import { fade } from 'svelte/transition';
 
   const dispatch = createEventDispatcher();
+  const nosleep = new NoSleep();
 
   const options = {
     enableHighAccuracy: true,
@@ -13,7 +14,7 @@
 
   let startLat, startLong, totalDistance = 0, watchId, startButtonVisible = true
 
-  function start(pos) {
+  function startPosition(pos) {
     const crd = pos.coords;
 
     startLat = crd.latitude
@@ -48,9 +49,8 @@
   }
 
   export function setStartPosition() {
-    if (startButtonVisible) startButtonVisible = false;
     console.log('reset position')
-    navigator.geolocation.getCurrentPosition(start, error, options);
+    navigator.geolocation.getCurrentPosition(startPosition, error, options);
   }
 
   function getDistanceFromStart() {
@@ -58,6 +58,20 @@
     watchId = navigator.geolocation.watchPosition(newPosition, error, options);
   }
 
+  function start() {
+    nosleep.enable();
+    startButtonVisible = false;
+    setStartPosition()
+  }
+
+  function stop() {
+    nosleep.enable();
+    navigator.geolocation.clearWatch(watchId);
+    totalDistance = 0
+    startButtonVisible = true;
+  }
+
+  onDestroy(() => stop());
 </script>
 
 <div>
@@ -65,8 +79,13 @@
     <p>Total distance: {totalDistance} meters</p>
   </div>
   {#if startButtonVisible}
-    <button transition:fade class="button--large button--success" on:click={setStartPosition}>
+    <button transition:fade class="button--large button--success" on:click={start}>
       Start
+    </button>
+  {/if}
+  {#if !startButtonVisible}
+    <button transition:fade class="button--large button--error" on:click={stop}>
+      Stop
     </button>
   {/if}
 </div>
