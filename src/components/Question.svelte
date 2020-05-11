@@ -36,7 +36,8 @@
   function handleContinue() {
     dispatch('continue', {})
   }
-
+  // @todo: play sound on displaying question
+  // @todo: disable buttons after answer
 </script>
 <div>
   {#if question}
@@ -47,7 +48,7 @@
     {/each}
 
   {:else}
-    laddar fråga ...
+    loading question ...
   {/if}
 
   {#if status}
