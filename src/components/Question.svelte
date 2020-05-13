@@ -1,5 +1,6 @@
 <script>
   import { onMount, createEventDispatcher } from 'svelte';
+  import { fly } from 'svelte/transition';
   import { numCorrectQuestions, numTotalQuestions} from '../stores'
 
   const dispatch = createEventDispatcher();
@@ -10,7 +11,7 @@
   let status
 
   onMount(async () => {
-		const res = await fetch(`https://opentdb.com/api.php?amount=1&difficulty=medium`);
+		const res = await fetch(`https://opentdb.com/api.php?amount=1&category=9&difficulty=medium`);
     const items = await res.json()
     const item = items.results[0]
     question = item.question;
@@ -39,14 +40,15 @@
   // @todo: play sound on displaying question
   // @todo: disable buttons after answer
 </script>
-<div>
+<div class="wrapper">
   {#if question}
-    <p>{@html question}</p>
+    <div transition:fly="{{ y: 80, duration: 300 }}" class="question">
+      <p>{@html question}</p>
 
-    {#each choices as choice}
-      <button on:click={() => handleSubmitAnswer(choice)}>{@html choice}</button>
-    {/each}
-
+      {#each choices as choice}
+        <button on:click={() => handleSubmitAnswer(choice)}>{@html choice}</button>
+      {/each}
+    </div>
   {:else}
     loading question ...
   {/if}
@@ -59,12 +61,12 @@
 </div>
 
 <style>
-  div {
+  .wrapper {
     margin: 40px auto;
     max-width: 640px;
   }
   button {
-    margin: 16px 8px;
+    margin: 8px;
   }
 
   p {

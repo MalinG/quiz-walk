@@ -6,6 +6,8 @@
   const dispatch = createEventDispatcher();
   const nosleep = new NoSleep();
 
+  const questionInterval = 200
+
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -37,7 +39,7 @@
       navigator.geolocation.clearWatch(watchId);
       totalDistance += 10
 
-      if(totalDistance % 300 === 0) {
+      if(totalDistance % questionInterval === 0) {
         dispatch('showQuestion', {});
       }
       setStartPosition();
@@ -70,6 +72,7 @@
     totalDistance = 0
     startButtonVisible = true;
   }
+  // Todo - remove getcurrentposiotion and only use watch. Maybe update distance on the fly and never restart watch
 
   onDestroy(() => stop());
 </script>
@@ -79,12 +82,12 @@
     <p>Total distance: {totalDistance} meters</p>
   </div>
   {#if startButtonVisible}
-    <button transition:fade class="button--large button--success" on:click={start}>
+    <button class="button--large button--success" on:click={start}>
       Start
     </button>
   {/if}
   {#if !startButtonVisible}
-    <button transition:fade class="button--large" on:click={stop}>
+    <button in:fade class="button--large" on:click={stop}>
       Stop
     </button>
   {/if}
